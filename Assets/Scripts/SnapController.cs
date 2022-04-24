@@ -1,49 +1,50 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SnapController  : Collision
 {
-    public List<Transform> snapePoints;
-    public List<Items> dragAbles;
-    private float snapeRange = 1.0f;
+    public List<GameObject> snapePoints;
+    public List<Items> DragAbles;
+    float snapeRange = 1f;
+    Vector2 Tempos;
+
     
     
-    public int moves;
-    private void Start()
+    public int Moves;
+    void Start()
     {
-       
-        foreach (var items in dragAbles )
+        foreach (Items items in DragAbles )
         {
             items.dragEndedCallBack = OnDrageEnded;
         }
 
-        Debug.Log(resetPos);
     }
 
-    private void OnDrageEnded(Items items)
+    void OnDrageEnded(Items items)
     {
-
-        
         Transform closestSnapePoint = null;
-        var closestDistance = -1f; 
-
-        foreach(var snapePoint in snapePoints)
+        float closestDistance = -1; 
+        foreach(GameObject snapePoint in snapePoints)
         {
-           var currentDistance = Vector2.Distance(items.transform.position, snapePoint.transform.position);
-            if(closestSnapePoint == null || currentDistance< closestDistance )
+           float currentDistance = Vector2.Distance(items.transform.position, snapePoint.transform.position);
+            if (closestSnapePoint == null || currentDistance < closestDistance)
             {
-                closestSnapePoint = snapePoint;
+                closestSnapePoint = snapePoint.transform;
                 closestDistance = currentDistance;
-                
+                Tempos = snapePoint.transform.position;
             }
         }
-
         if(closestSnapePoint != null && closestDistance <= snapeRange)
         {
             items.transform.position = closestSnapePoint.position;
-            moves++;
+            if(Tempos.x==items.transform.position.x && Tempos.y == items.transform.position.y)
+            {
+                resetPos = Tempos;
+            }
+           
+            Moves++;
+          
         }
-    }
-
-    
+    }  
 }

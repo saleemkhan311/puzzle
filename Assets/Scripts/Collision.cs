@@ -1,26 +1,34 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
+  
 public class Collision : MonoBehaviour
 {
-    private Vector2 _tempPos;
-
-
+    Vector2 tempPos;
+    bool moving;
+    
     public Vector2 resetPos;
-
+    Vector2 colliderPos;
+    bool mouseUp;
     private void Start()
     {
         resetPos = transform.position;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+   
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        _tempPos = resetPos;
-        collision.transform.position = resetPos;
+        if (Input.GetMouseButtonUp(0))
+        {
+            tempPos = resetPos;
+            collision.transform.position = resetPos;
+            Debug.Log(collision.name);
+        }  
     }
-
-    private void OnTriggerExit(Collider other)
+    
+   
+    private void OnMouseUp()
     {
-        
+        resetPos = this.transform.position;
     }
+   
 }
