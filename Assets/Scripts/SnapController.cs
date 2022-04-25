@@ -21,6 +21,7 @@ public class SnapController  : Collision
 
     }
 
+
     void OnDrageEnded(Items items)
     {
         Transform closestSnapePoint = null;
@@ -38,12 +39,9 @@ public class SnapController  : Collision
         if(closestSnapePoint != null && closestDistance <= snapeRange)
         {
             items.transform.position = closestSnapePoint.position;
-            if(Tempos.x==items.transform.position.x && Tempos.y == items.transform.position.y)
-            {
-                resetPos = Tempos;
-            }
+            resetPos = items.transform.position;
            
-            Moves++;
+            //Moves++;
           
         }
     }  

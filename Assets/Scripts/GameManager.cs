@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public SnapController controller;
     
     public int totalMoves;
+    public int moves;
     public Text MovesText;
     public static GameManager singleton;
     public int scores;
@@ -25,15 +26,12 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        int moves = controller.Moves;
+        
         MovesText.text = "Moves  " + moves + "/" + totalMoves;
-        Debug.Log("Scores = " + scores);
+        
         if(scores>=18)
         {
-            win = true;
-            
-
-        }
+            win = true;  }
         if (moves >= 30)
         {
             lose = true;
@@ -49,6 +47,7 @@ public class GameManager : MonoBehaviour
             controller.enabled = false;
         }
 
+        
         
     }
 
