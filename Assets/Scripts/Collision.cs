@@ -6,7 +6,7 @@ public class Collision : MonoBehaviour
 {
     Vector2 tempPos;
     bool moving;
-    public GameObject Swap;
+    
     public Vector2 resetPos;
     Vector2 colliderPos;
     bool isPickedUp;
@@ -15,13 +15,14 @@ public class Collision : MonoBehaviour
     {
         resetPos = transform.position;
     }
-   
+
+    
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (Input.GetMouseButtonUp(0) && isPickedUp)
         {
+            
             collision.transform.position = resetPos;
-
             GameManager.singleton.moves++;
             //FindObjectOfType<SwapManager>().Swap(collision.transform, this.gameObject.transform);
             

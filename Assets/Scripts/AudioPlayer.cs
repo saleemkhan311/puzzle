@@ -27,6 +27,11 @@ public class AudioPlayer : MonoBehaviour
         
         timer += Time.deltaTime;
         Seek.fillAmount = Mathf.Lerp(Seek.fillAmount, value , timer);
+
+        /*if(Seek.fillAmount>=0.99)
+        {
+            Pause = false;
+        }*/
         
 
     }

@@ -7,12 +7,17 @@ public class Items : MonoBehaviour
     public delegate void DragEndedDalegate(Items dragAbles);
     public DragEndedDalegate dragEndedCallBack;
     public bool isMoving;
-    Vector2 resetPos;
+    public Vector2 resetPos;
     SpriteRenderer sprite;
+    public GameObject Slot;
+    private Vector2 slot_Pos;
+    //public GameObject Temp;
+    bool isPositioned = false;
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         resetPos = transform.position;
+        slot_Pos = Slot.transform.position;
     }
 
     // Update is called once per frame
@@ -20,6 +25,13 @@ public class Items : MonoBehaviour
     {
         if (GameManager.singleton.win || GameManager.singleton.lose) { this.enabled = false; }
         Constraint();
+        if(Slot !=null)
+        {
+            Snap();
+        }
+        
+        
+        
     }
     private void OnMouseDrag()
     {
@@ -35,11 +47,7 @@ public class Items : MonoBehaviour
     }
     private void OnMouseDown()
     {
-       if(GameManager.singleton.win != true )
-        {
-
-           if(GameManager.singleton.lose != true)
-            {
+      
                 Vector3 mousePos;
                 mousePos = Input.mousePosition;
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -48,8 +56,7 @@ public class Items : MonoBehaviour
                 isMoving = true;
 
                 sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
-            }
-        }
+           
     }
 
     private void OnMouseUp()
@@ -63,7 +70,31 @@ public class Items : MonoBehaviour
     }
     
    
+    void Snap()
+    {
+        float Distance = Vector2.Distance(transform.position, slot_Pos);
+        if(Distance<=0.5f)
+        {
+            if(slot_Pos != null) { transform.position = slot_Pos; }
+            Invoke("DisableCollider", 1);
 
+            if(!isPositioned )
+            {
+               
+                    GameManager.singleton.scores++;
+                    isPositioned = true;
+                    
+            }
+
+           
+        }
+    }
+
+    void DisableCollider()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+
+    }
     void Constraint()
     {
 

@@ -7,42 +7,52 @@ public class SnapController  : Collision
     public List<GameObject> snapePoints;
     public List<Items> DragAbles;
     float snapeRange = 1f;
-    Vector2 Tempos;
+    
+    
 
     
     
     public int Moves;
     void Start()
     {
+        
+
         foreach (Items items in DragAbles )
         {
             items.dragEndedCallBack = OnDrageEnded;
+            //InitialPos = items.transform.position;
         }
 
     }
 
-
     void OnDrageEnded(Items items)
     {
-        Transform closestSnapePoint = null;
-        float closestDistance = -1; 
-        foreach(GameObject snapePoint in snapePoints)
-        {
-           float currentDistance = Vector2.Distance(items.transform.position, snapePoint.transform.position);
-            if (closestSnapePoint == null || currentDistance < closestDistance)
+            Transform closestSnapePoint = null;
+            float closestDistance = -1;
+            foreach (GameObject snapePoint in snapePoints)
             {
-                closestSnapePoint = snapePoint.transform;
-                closestDistance = currentDistance;
-                Tempos = snapePoint.transform.position;
+               // Vector2 InitialPos = items.transform.position;
+                
+                    float currentDistance = Vector2.Distance(items.transform.position, snapePoint.transform.position);
+                    if (closestSnapePoint == null || currentDistance < closestDistance)
+                    {
+
+                        closestSnapePoint = snapePoint.transform;
+                        closestDistance = currentDistance;
+                        //items.transform.position = closestSnapePoint.position;
+
+                    }
+                
             }
-        }
-        if(closestSnapePoint != null && closestDistance <= snapeRange)
-        {
-            items.transform.position = closestSnapePoint.position;
-            resetPos = items.transform.position;
-           
-            //Moves++;
-          
-        }
+            if (closestSnapePoint != null && closestDistance <= snapeRange)
+            {
+                items.transform.position = closestSnapePoint.position;
+               // resetPos = items.transform.position;
+
+
+
+
+            }
+        
     }  
 }
